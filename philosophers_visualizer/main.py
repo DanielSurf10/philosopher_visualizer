@@ -3,7 +3,7 @@ import math
 
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
-pygame.display.set_caption('Filósofos Jantando')
+pygame.display.set_caption('Jantarzinho metafisico')
 clock = pygame.time.Clock()
 
 philo_number = 5
@@ -65,7 +65,10 @@ while running:
     #     states[philosopher_id] = state
 
     try:
-        line = next(lines)
+        while True:
+            line = next(lines)
+            if 'fork' not in line:
+                break
     except StopIteration:
         break
 
@@ -78,9 +81,13 @@ while running:
     draw_table()
     for i, (x, y) in enumerate(positions):
         draw_philosopher(int(x), int(y), states[i])
+        font = pygame.font.Font(None, 20)
+        text = font.render(states[i], True, (0, 0, 0))
+        text_rect = text.get_rect(center=(x, y-30))
+        screen.blit(text, text_rect)
 
     pygame.display.flip()
-    clock.tick(60)
+    clock.tick(1)
 
 running = True
 while running:
